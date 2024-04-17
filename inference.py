@@ -2,7 +2,13 @@ from transformers import AutoModelForSequenceClassification
 from transformers import AutoTokenizer, AutoConfig
 import numpy as np
 from scipy.special import softmax
-# Preprocess text (username and link placeholders)
+import re
+
+def replace_substring(test_str, s1, s2):
+    # Replacing all occurrences of substring s1 with s2
+    test_str = re.sub(s1, s2, test_str)
+    return test_str
+
 def preprocess(text):
     new_text = []
     for t in text.split(" "):
@@ -17,7 +23,6 @@ def inference(query):
     config = AutoConfig.from_pretrained(MODEL)
     # PT
     model = AutoModelForSequenceClassification.from_pretrained(MODEL)
-    #model.save_pretrained(MODEL)
     text = preprocess(query)
     encoded_input = tokenizer(text, return_tensors='pt')
     output = model(**encoded_input)
@@ -31,10 +36,12 @@ def inference(query):
     for i in range(scores.shape[0]):
         l = config.id2label[ranking[i]]
         s = scores[ranking[i]]
-        print(f"{i+1}) {l} {np.round(float(s), 4)}")
         ran.append(s)
 
     return ran
 
 def run_inference(query):
+    query = replace_substring(query, "%20", " ")
+    print(query)
     return inference(query=query)
+
