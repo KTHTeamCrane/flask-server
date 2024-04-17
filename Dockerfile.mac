@@ -1,0 +1,10 @@
+FROM bitnami/pytorch:2.2.2
+
+# RUN conda update -y conda
+# RUN conda install -y python=3.12
+
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
+
+WORKDIR /workspaces/room-layout-training
+COPY . .

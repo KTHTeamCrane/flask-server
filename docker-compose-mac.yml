@@ -1,0 +1,12 @@
+version: "3"
+services:
+  train:
+    image: flask-server
+    build:
+      context: .
+      dockerfile: Dockerfile.mac
+
+    container_name: flask-server
+
+  volumes:
+    - ./:/workspace
