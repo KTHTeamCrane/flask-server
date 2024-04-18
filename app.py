@@ -4,12 +4,21 @@ import json
 
 app = Flask(__name__)
 
-@app.route("/")
+@app.route("/echo")
 def echo():
     if request.args.get("query") == None:
         return "To fake or not fake, that is the question"
     else: return request.args["query"]
 
+@app.route("/")
+def help():
+    help = """
+method  endpoint    params
+
+GET     echo        query
+POST    api/fake    <body>
+"""
+    return help
 
 @app.route("/api/fake", methods=["POST"])
 def api_fake():
