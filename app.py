@@ -13,10 +13,10 @@ def echo():
 
 @app.route("/api/fake", methods=["POST"])
 def api_fake():
-    if request.args.get("article") == None:
+    if request.get_data() == "":
         return jsonify(error=True, error_msg="Article not provided", data=None)
     else: 
-        result = run_inference(request.args.get("article"))
+        result = run_inference(str(request.get_data()))
         data = {
             "error": False,
             "error_msg": None,
@@ -26,5 +26,10 @@ def api_fake():
             }
         }
         return json.dumps(data)
+    
+
+@app.route("/test")
+def test_receive_body():
+    return request.get_data()
 
 

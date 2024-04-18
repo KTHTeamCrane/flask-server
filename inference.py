@@ -41,7 +41,5 @@ def inference(query):
     return ran
 
 def run_inference(query):
-    query = replace_substring(query, "%20", " ")
-    print(query)
     return inference(query=query)
 
