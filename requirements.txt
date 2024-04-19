@@ -4,3 +4,6 @@ torchvision
 torchaudio
 transformers
 scipy
+
+# temporarily here for loading the longformer model
+jaxtyping
